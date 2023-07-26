@@ -6,34 +6,38 @@ import { useEffect } from "react";
 import { socket } from "./socket";
 import { getAllProducts, getCategories } from "./api/axios";
 import { fetchAllProducts, fetchCategories } from "./redux/actions";
+import Login from "./pages/Login/Login";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(function () {
-    socket.on("connected", function() {
-      console.log("Connection succefull")
-    })
+    socket.on("connected", function () {
+      console.log("Connection successful");
+    });
 
     socket.on("fetchCategories", function () {
-      console.log("fetch-c")
+      console.log("fetch-c");
       getCategories().then((response) => dispatch(fetchCategories(response)));
     });
 
     socket.on("fetchProducts", function () {
-      console.log("fetch-p")
+      console.log("fetch-p");
       getAllProducts().then((response) => dispatch(fetchAllProducts(response)));
     });
   });
 
   return (
-    <div className="App">
+    <div className="App bg-light d-flex flex-column" style={{ minHeight: "100vh" }}>
       <Nav />
       <Routes>
         <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
       </Routes>
+      <footer className="bg-dark text-center p-3 text-light mt-auto">
+        BasilOrien
+      </footer>
     </div>
   );
 }
-
 
 export default App;

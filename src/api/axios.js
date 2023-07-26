@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL;
 
 export async function getAllProducts() {
@@ -16,5 +16,23 @@ export async function getCategories() {
     return response.data;
   } catch (error) {
     return error.data;
+  }
+}
+
+export async function login(username, password) {
+  try {
+    const response = await axios.post(
+      `${API_URL}/auth/login`,
+      {
+        username: String(username),
+        password: String(password),
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error?.response?.data;
   }
 }
