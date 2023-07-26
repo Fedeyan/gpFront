@@ -12,7 +12,7 @@ const LoginForm = () => {
   }
 
   async function onSubmitHandler(e) {
-    e.preventDefault();
+    // e.preventDefault();
     const { username, password } = loginData;
     const mailRegEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
     const passwordRegEx = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/;
@@ -46,9 +46,16 @@ const LoginForm = () => {
 
   return (
     <div className="container mt-5">
-      <div className="row justify-content-center"> {/* Creamos una fila y centramos el formulario */}
-        <div className="col-md-6"> {/* Establecemos un ancho de 6 columnas para el formulario */}
-          <form onSubmit={(e) => onSubmitHandler(e)} className="p-3 border rounded">
+      <div className="row justify-content-center">
+        {" "}
+        {/* Creamos una fila y centramos el formulario */}
+        <div className="col-md-6">
+          {" "}
+          {/* Establecemos un ancho de 6 columnas para el formulario */}
+          <form
+            onSubmit={(e) => onSubmitHandler(e)}
+            className="p-3 border rounded"
+          >
             <h3 className="mb-4">Iniciar sesión</h3>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">

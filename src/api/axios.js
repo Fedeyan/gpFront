@@ -36,3 +36,23 @@ export async function login(username, password) {
     return error?.response?.data;
   }
 }
+
+export async function isLogin() {
+  try {
+    const response = await axios.get(`${API_URL}/auth/isLogIn`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function logout() {
+  try {
+    const response = await axios.get(`${API_URL}/auth/logout`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {}
+}
