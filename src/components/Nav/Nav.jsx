@@ -82,6 +82,9 @@ const Nav = () => {
             ) : (
               <>
                 <li className="nav-item">
+                  <Link className="nav-link">Mi pedido</Link>
+                </li>
+                <li className="nav-item">
                   <button
                     onClick={() => logoutHandler()}
                     className="nav-link"

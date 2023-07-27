@@ -84,7 +84,7 @@ const LoginForm = () => {
               />
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-dark">
                 Iniciar sesión
               </button>
             </div>

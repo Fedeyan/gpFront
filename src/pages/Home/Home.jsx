@@ -13,11 +13,11 @@ const Home = () => {
           <Sidebar />
         </div>
         <div className="col-md-9 col-lg-10">
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+          <div className="row row-cols-1 row-cols-sm-3 row-cols-md-4 ">
             {products &&
               products?.all.map(function (data) {
                 return (
-                  <div key={data.id} className="col mb-4 px-2">
+                  <div key={data.id} className="col mb-3 px-1">
                     <Card data={data} />
                   </div>
                 );
