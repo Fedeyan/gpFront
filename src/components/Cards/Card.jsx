@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { addProduct } from "../../api/axios";
 
 const Card = ({ data }) => {
   const { boolIsLogIn } = useContext(AuthContext);
@@ -18,6 +19,18 @@ const Card = ({ data }) => {
 
     if (currentValue > data.stock) {
       setCant(data.stock);
+    }
+  }
+
+  async function addHandler() {
+    const result = await addProduct(data.code, cant);
+    const { bool, message, error } = result;
+    console.log(result);
+    if (bool === false) {
+      alert(error);
+      return setRedirect(true);
+    } else {
+      return alert(message);
     }
   }
 
@@ -47,18 +60,11 @@ const Card = ({ data }) => {
         ) : (
           <div className="mt-3 d-flex flex-column">
             {boolIsLogIn ? (
-              <Link to="#" className="btn btn-dark ">
+              <button onClick={() => addHandler()} className="btn btn-dark ">
                 Agregar al pedido
-              </Link>
+              </button>
             ) : (
-              <button
-                onClick={() => {
-                  if (!boolIsLogIn) {
-                    setRedirect(true);
-                  }
-                }}
-                className="btn btn-dark "
-              >
+              <button onClick={() => addHandler()} className="btn btn-dark ">
                 Agregar al pedido
               </button>
             )}

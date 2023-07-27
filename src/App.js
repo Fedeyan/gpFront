@@ -4,11 +4,12 @@ import Home from "./pages/Home/Home";
 import Nav from "./components/Nav/Nav";
 import { useContext, useEffect } from "react";
 import { socket } from "./socket";
-import { getAllProducts, getCategories } from "./api/axios";
-import { fetchAllProducts, fetchCategories } from "./redux/actions";
+import { getAllProducts, getCategories, getOrder } from "./api/axios";
+import { fetchAllProducts, fetchCategories, fetchOrder } from "./redux/actions";
 import Login from "./pages/Login/Login";
 import { AuthContext } from "./context/AuthContext";
 import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes";
+import Order from "./pages/Order/Order";
 
 function App() {
   const { isDispatched } = useContext(AuthContext);
@@ -27,6 +28,10 @@ function App() {
       console.log("fetch-p");
       getAllProducts().then((response) => dispatch(fetchAllProducts(response)));
     });
+
+    socket.on("fetchOrder", function () {
+      getOrder().then((response) => dispatch(fetchOrder(response)));
+    });
   });
 
   return !isDispatched ? null : (
@@ -39,7 +44,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/test" element={<div>Test</div>}></Route>
+          <Route path="/order" element={<Order />}></Route>
         </Route>
       </Routes>
       <footer className=" bg-dark text-center p-1 text-light mt-auto">

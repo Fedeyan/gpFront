@@ -11,7 +11,7 @@ const Nav = () => {
       const { bool } = await logout();
       if (bool === true) {
         alert("Cerraste sesion");
-        return window.location.reload();
+        return window.location.replace("/");
       } else {
         throw new Error("Error");
       }
@@ -82,7 +82,9 @@ const Nav = () => {
             ) : (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link">Mi pedido</Link>
+                  <Link to={"/order"} className="nav-link">
+                    Mi pedido
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <button

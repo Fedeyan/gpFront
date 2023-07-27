@@ -56,3 +56,32 @@ export async function logout() {
     return response.data;
   } catch (error) {}
 }
+
+export async function getOrder() {
+  try {
+    const response = await axios.get(`${API_URL}/orders/get`, {
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function addProduct(product, cant) {
+  try {
+    const response = await axios.post(
+      `${API_URL}/orders/add`,
+      {
+        product: Number(product),
+        cant: Number(cant),
+      },
+      { withCredentials: true }
+    );
+    console.log("algo")
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
