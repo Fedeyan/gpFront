@@ -6,9 +6,8 @@ const Order = () => {
   const order = useSelector((store) => store.order);
 
   const products = order?.products;
-  const status = order?.status;
   const bool = order?.bool;
-  const message = order?.message;
+  const message = order?.message ;
   return bool === false ? (
     <div className="container-fluid align-items-center">
       <h3 className="text-center mt-5">{message}</h3>
