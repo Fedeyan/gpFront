@@ -79,7 +79,6 @@ export async function addProduct(product, cant) {
       },
       { withCredentials: true }
     );
-    console.log("algo");
     return response.data;
   } catch (error) {
     return error;
