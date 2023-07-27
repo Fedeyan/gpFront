@@ -38,15 +38,34 @@ const Card = ({ data }) => {
     <Navigate to={"/login"} />
   ) : (
     <div className="card h-100">
-      <img src={data.imagen} className="card-img-top" alt="..." />
-      <div className="card-body">
+      <img
+        src={data.imagen}
+        className="card-img-top img-thumbnail img-fluid"
+        alt="pImg"
+        style={{ maxHeight: "150px", minHeight: "150px" }}
+      />
+      <div className="card-body" style={{ minHeight: "200px" }}>
         <h5 className="card-title text-center">{data.nombre}</h5>
         <p className="card-text text-center">{data.descripcion}</p>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item text-center">
+          <li
+            className="list-group-item text-center"
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
             <b>Marca:</b> {data?.marca}
           </li>
-          <li className="list-group-item text-center">
+          <li
+            className="list-group-item text-center"
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
             <b>Modelo:</b> {data?.modelo}
           </li>
         </ul>
@@ -60,11 +79,11 @@ const Card = ({ data }) => {
         ) : (
           <div className="mt-3 d-flex flex-column">
             {boolIsLogIn ? (
-              <button onClick={() => addHandler()} className="btn btn-dark ">
+              <button onClick={() => addHandler()} className="btn btn-dark">
                 Agregar al pedido
               </button>
             ) : (
-              <button onClick={() => addHandler()} className="btn btn-dark ">
+              <button onClick={() => addHandler()} className="btn btn-dark">
                 Agregar al pedido
               </button>
             )}

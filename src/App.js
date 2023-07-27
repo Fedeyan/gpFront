@@ -10,6 +10,13 @@ import Login from "./pages/Login/Login";
 import { AuthContext } from "./context/AuthContext";
 import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes";
 import Order from "./pages/Order/Order";
+import AdminRoutes from "./components/PrivateRoutes/AdminRoutes";
+import AdminDashboard from "./pages/Manage/AdminDashboard";
+import AdminProducts from "./pages/Manage/AdminProducts";
+import ViewProducts from "./pages/AdminProducts/ViewProducts";
+import AddProducts from "./pages/AdminProducts/AddProducts";
+import AddCategory from "./pages/AdminProducts/AddCategory";
+import ViewCategories from "./pages/AdminProducts/ViewCategories";
 
 function App() {
   const { isDispatched } = useContext(AuthContext);
@@ -20,12 +27,10 @@ function App() {
     });
 
     socket.on("fetchCategories", function () {
-      console.log("fetch-c");
       getCategories().then((response) => dispatch(fetchCategories(response)));
     });
 
     socket.on("fetchProducts", function () {
-      console.log("fetch-p");
       getAllProducts().then((response) => dispatch(fetchAllProducts(response)));
     });
 
@@ -45,6 +50,14 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/order" element={<Order />}></Route>
+          <Route element={<AdminRoutes />}>
+            <Route path="/manage" element={<AdminDashboard />} />
+            <Route path="/manage/products" element={<AdminProducts />}></Route>
+            <Route path="/manage/products/list" element={<ViewProducts />} />
+            <Route path="/manage/products/add" element={<AddProducts />} />
+            <Route path="/manage/categories/add" element={<AddCategory />} />
+            <Route path="/manage/categories/list" element={<ViewCategories />} />
+          </Route>
         </Route>
       </Routes>
       <footer className=" bg-dark text-center p-1 text-light mt-auto">

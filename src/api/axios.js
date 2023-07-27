@@ -79,7 +79,69 @@ export async function addProduct(product, cant) {
       },
       { withCredentials: true }
     );
-    console.log("algo")
+    console.log("algo");
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function checkIfAdmin() {
+  try {
+    const response = await axios.get(`${API_URL}/admin/check`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function addCategorie(nombre) {
+  try {
+    const response = await axios.post(
+      `${API_URL}/categories/add`,
+      {
+        nombre,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error?.response?.data;
+  }
+}
+
+export async function addProductList(
+  nombre,
+  code,
+  marca,
+  modelo,
+  imagen,
+  categoria,
+  stock
+) {
+  try {
+    const response = await axios.post(
+      `${API_URL}/products/add`,
+      {
+        nombre,
+        code,
+        marca,
+        modelo,
+        imagen,
+        categoria,
+        stock,
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error;

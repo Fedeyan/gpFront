@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { logout } from "../../api/axios";
 
 const Nav = () => {
-  const { boolIsLogIn } = useContext(AuthContext);
+  const { boolIsLogIn, isAdmin } = useContext(AuthContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   async function logoutHandler() {
     try {
@@ -19,8 +20,13 @@ const Nav = () => {
       console.error(error);
     }
   }
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <nav className=" shadow-sm top-0 w-100 navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="shadow-sm top-0 w-100 navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">
           GP Motos
@@ -28,15 +34,14 @@ const Nav = () => {
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          onClick={handleMenuToggle}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div
+          className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
+          id="navbarNav"
+        >
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/">
@@ -81,17 +86,22 @@ const Nav = () => {
               </>
             ) : (
               <>
+                {isAdmin ? (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to={"/manage"}>
+                        Administrar
+                      </Link>
+                    </li>
+                  </>
+                ) : null}
                 <li className="nav-item">
                   <Link to={"/order"} className="nav-link">
                     Mi pedido
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <button
-                    onClick={() => logoutHandler()}
-                    className="nav-link"
-                    to="/register"
-                  >
+                  <button onClick={() => logoutHandler()} className="nav-link">
                     Cerrar sesión
                   </button>
                 </li>
