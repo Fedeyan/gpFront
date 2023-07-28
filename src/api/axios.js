@@ -146,3 +146,8 @@ export async function addProductList(
     return error;
   }
 }
+
+async function axiostest() {
+  const r = await axios.get(`${API_URL}/debug/corsOrigin`);
+  console.log(r.data);
+}
