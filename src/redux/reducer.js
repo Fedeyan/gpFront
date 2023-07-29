@@ -3,6 +3,7 @@ import {
   FETCH_ALL_PRODUCTS,
   FETCH_CATEGORIES,
   FETCH_ORDERS,
+  SET_ALERTS,
 } from "./actions";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   categories: [],
   order: [],
   adminOrders: [],
+  alerts: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -39,6 +41,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         adminOrders: payload,
+      };
+    case SET_ALERTS:
+      return {
+        ...state,
+        alerts: payload,
       };
     default:
       return state;

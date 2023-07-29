@@ -2,8 +2,16 @@ import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { addProduct } from "../../api/axios";
+import CustomAlert from "../Alerts/CustomAlert";
 
 const Card = ({ data }) => {
+  const [alertData, setAlertData] = useState({
+    show: false,
+    heading: "",
+    content: "",
+    variant: "primary",
+    reload: false,
+  });
   const { boolIsLogIn } = useContext(AuthContext);
   const [cant, setCant] = useState(1);
   const [redirect, setRedirect] = useState(false);
@@ -27,10 +35,21 @@ const Card = ({ data }) => {
     const { bool, message, error } = result;
     console.log(result);
     if (bool === false) {
-      alert(error);
+      setAlertData({
+        show: true,
+        heading: "Error al agregar",
+        content: error,
+        variant: "danger",
+      });
       return setRedirect(true);
     } else {
-      return alert(message);
+      setAlertData({
+        show: true,
+        heading: "Operacion exitosa",
+        content: message,
+        variant: "success",
+      });
+      return;
     }
   }
 
@@ -38,6 +57,7 @@ const Card = ({ data }) => {
     <Navigate to={"/login"} />
   ) : (
     <div className="card h-100">
+      <CustomAlert data={alertData} setData={setAlertData} />
       <img
         src={data.imagen}
         className="card-img-top img-thumbnail img-fluid"

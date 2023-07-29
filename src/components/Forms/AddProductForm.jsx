@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { addProductList } from "../../api/axios";
+import CustomAlert from "../Alerts/CustomAlert";
 
 const AddProductForm = () => {
+  const [alertData, setAlertData] = useState({
+    show: false,
+    heading: "",
+    content: "",
+    variant: "primary",
+    reload: false,
+  });
   const categories = useSelector((store) => store.categories);
   const [productData, setProductData] = useState({
     nombre: "",
@@ -35,7 +43,21 @@ const AddProductForm = () => {
         !stock ||
         !image
       ) {
-        alert("Por favor, complete todos los campos.");
+        if (!categoria) {
+        return  setAlertData({
+            show: true,
+            heading: "Campos incompletos.",
+            content: " Ingresa al menos una categoria.",
+            variant: "danger",
+          });
+        }
+
+        setAlertData({
+          show: true,
+          heading: "Campos incompletos.",
+          content: "Por favor, complete todos los campos.",
+          variant: "danger",
+        });
         return;
       }
 
@@ -57,25 +79,34 @@ const AddProductForm = () => {
         if (isNaN(Number(stock))) invalidFields.push("Stock");
         if (!(image instanceof File)) invalidFields.push("Imagen");
 
-        alert(
-          `Los siguientes campos tienen tipos de datos no válidos: ${invalidFields.join(
+        setAlertData({
+          show: true,
+          heading: "Campos inválidos.",
+          content: `Los siguientes campos tienen tipos de datos no válidos: ${invalidFields.join(
             ", "
-          )}.`
-        );
+          )}.`,
+          variant: "danger",
+        });
         return;
       }
+
       const result = await addProductList(
         nombre,
-        Number(code), // Convertir a número
+        Number(code),
         marca,
         modelo,
         image,
         categoria,
-        Number(stock) // Convertir a número
+        Number(stock)
       );
       const { bool } = await result;
       if (bool === true) {
-        alert("Producto añadido con exito.");
+        setAlertData({
+          show: true,
+          heading: "Producto añadido con éxito.",
+          content: "El producto se ha agregado exitosamente.",
+          variant: "success",
+        });
         setProductData({
           nombre: "",
           code: 0,
@@ -87,7 +118,12 @@ const AddProductForm = () => {
         });
         return;
       } else {
-        alert("Hay errores en los campos");
+        setAlertData({
+          show: true,
+          heading: "Error al agregar producto.",
+          content: "Hay errores en los campos.",
+          variant: "danger",
+        });
         return;
       }
     } catch (error) {
@@ -97,6 +133,7 @@ const AddProductForm = () => {
 
   return (
     <div className="container mt-4 mb-5 bg-white shadow rounded-2">
+      <CustomAlert setData={setAlertData} data={alertData} />
       <form
         onSubmit={onSubmitHandler}
         encType="multipart/form-data"

@@ -172,3 +172,15 @@ export async function sendOrder() {
     return error;
   }
 }
+
+export async function getAlerts() {
+  try {
+    const response = await axios.get(`${API_URL}/alerts/get`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
+

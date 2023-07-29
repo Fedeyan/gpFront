@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import OrderTable from "../../components/Tables/OrderTable";
 import { useSelector } from "react-redux";
 import { sendOrder } from "../../api/axios";
+import CustomAlert from "../../components/Alerts/CustomAlert";
 
 const Order = () => {
   const order = useSelector((store) => store.order);
@@ -9,19 +10,46 @@ const Order = () => {
   const bool = order?.bool;
   const message = order?.message;
 
+  const [alertData, setAlertData] = useState({
+    show: false,
+    heading: "",
+    content: "",
+    variant: "primary",
+    reload: false,
+  });
+
   async function onSubmitHandler(e) {
     e.preventDefault();
     const result = await sendOrder();
-    
+
     if (!result) {
       return alert("Sin respuesta del servidor. Reintente.");
     }
 
     const { bool, message, error } = result;
     if (!bool) {
-      return alert(error);
+      if (error && error.includes("continuar")) {
+        return setAlertData({
+          show: true,
+          heading: "Error",
+          content: error,
+          variant: "danger",
+          reload: true,
+        });
+      }
+      return setAlertData({
+        show: true,
+        heading: "Error",
+        content: error,
+        variant: "danger",
+      });
     }
-    return alert(message);
+    return setAlertData({
+      show: true,
+      heading: "Operación exitosa",
+      content: message,
+      variant: "success",
+    });
   }
 
   return bool === false ? (
@@ -70,6 +98,7 @@ const Order = () => {
           value="Solicitar presupuesto"
         />
       </form>
+      <CustomAlert data={alertData} setData={setAlertData} />
     </div>
   );
 };

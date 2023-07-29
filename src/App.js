@@ -4,8 +4,18 @@ import Home from "./pages/Home/Home";
 import Nav from "./components/Nav/Nav";
 import { useContext, useEffect } from "react";
 import { socket } from "./socket";
-import { fetchAdminOrders, getAllProducts, getCategories, getOrder } from "./api/axios";
-import { fetchAdminOrdersAction, fetchAllProducts, fetchCategories, fetchOrder } from "./redux/actions";
+import {
+  fetchAdminOrders,
+  getAllProducts,
+  getCategories,
+  getOrder,
+} from "./api/axios";
+import {
+  fetchAdminOrdersAction,
+  fetchAllProducts,
+  fetchCategories,
+  fetchOrder,
+} from "./redux/actions";
 import Login from "./pages/Login/Login";
 import { AuthContext } from "./context/AuthContext";
 import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes";
