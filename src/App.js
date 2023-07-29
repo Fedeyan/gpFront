@@ -4,8 +4,8 @@ import Home from "./pages/Home/Home";
 import Nav from "./components/Nav/Nav";
 import { useContext, useEffect } from "react";
 import { socket } from "./socket";
-import { getAllProducts, getCategories, getOrder } from "./api/axios";
-import { fetchAllProducts, fetchCategories, fetchOrder } from "./redux/actions";
+import { fetchAdminOrders, getAllProducts, getCategories, getOrder } from "./api/axios";
+import { fetchAdminOrdersAction, fetchAllProducts, fetchCategories, fetchOrder } from "./redux/actions";
 import Login from "./pages/Login/Login";
 import { AuthContext } from "./context/AuthContext";
 import PrivateRoutes from "./components/PrivateRoutes/PrivateRoutes";
@@ -17,6 +17,7 @@ import ViewProducts from "./pages/AdminProducts/ViewProducts";
 import AddProducts from "./pages/AdminProducts/AddProducts";
 import AddCategory from "./pages/AdminProducts/AddCategory";
 import ViewCategories from "./pages/AdminProducts/ViewCategories";
+import ViewOrders from "./pages/AdminOrders/ViewOrders";
 
 function App() {
   const { isDispatched } = useContext(AuthContext);
@@ -37,6 +38,12 @@ function App() {
     socket.on("fetchOrder", function () {
       getOrder().then((response) => dispatch(fetchOrder(response)));
     });
+
+    socket.on("sendOrder", function () {
+      fetchAdminOrders().then((result) => {
+        dispatch(fetchAdminOrdersAction(result));
+      });
+    });
   });
 
   return !isDispatched ? null : (
@@ -56,7 +63,11 @@ function App() {
             <Route path="/manage/products/list" element={<ViewProducts />} />
             <Route path="/manage/products/add" element={<AddProducts />} />
             <Route path="/manage/categories/add" element={<AddCategory />} />
-            <Route path="/manage/categories/list" element={<ViewCategories />} />
+            <Route
+              path="/manage/categories/list"
+              element={<ViewCategories />}
+            />
+            <Route path="/manage/orders" element={<ViewOrders />} />
           </Route>
         </Route>
       </Routes>

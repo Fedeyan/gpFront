@@ -146,3 +146,29 @@ export async function addProductList(
     return error;
   }
 }
+
+export async function fetchAdminOrders() {
+  try {
+    const response = await axios.get(`${API_URL}/admin/getAllOrders`, {
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function sendOrder() {
+  try {
+    const response = await axios.put(
+      `${API_URL}/orders/ask`,
+      {},
+      { withCredentials: true }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}

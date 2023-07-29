@@ -1,7 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
-import { checkIfAdmin, getOrder, isLogin } from "../api/axios";
+import {
+  checkIfAdmin,
+  fetchAdminOrders,
+  getOrder,
+  isLogin,
+} from "../api/axios";
 import { useDispatch } from "react-redux";
-import { fetchOrder } from "../redux/actions";
+import { fetchAdminOrdersAction, fetchOrder } from "../redux/actions";
 export const AuthContext = createContext("AuthContext");
 
 const AuthProvider = ({ children }) => {
@@ -19,6 +24,9 @@ const AuthProvider = ({ children }) => {
           setIsAdminChecked(true);
           if (bool === true) {
             setIsAdmin(true);
+            fetchAdminOrders().then((result) => {
+              dispatch(fetchAdminOrdersAction(result));
+            });
           }
         });
       }

@@ -18,7 +18,7 @@ const AdminSidebar = () => {
 
           <li className="list-group-item">
             <Link
-              to={`/manage/products`}
+              to={`/manage/orders`}
               className="text-decoration-none text-dark"
             >
               Pedidos
